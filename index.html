@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SENSI SNIPER- سنس ساز اسنایپر</title>
+<style>
+:root{
+  --bg:#0b1320;
+  --card:#0f1724;
+  --muted:#93a3b5;
+  --accent:#12b0e8;
+  --accent-2:#0ea5e9;
+  --pill:#0b1020;
+  --glass: rgba(255,255,255,0.03);
+  --radius:18px;
+  font-family: "Vazirmatn", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+html,body{height:100%;background:linear-gradient(180deg,#07101a 0%, #071827 100%);margin:0;color:#e6f0f6}
+.wrap{max-width:420px;margin:20px auto;padding:18px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:22px;box-shadow:0 10px 30px rgba(2,6,23,0.6);margin-bottom:18px}
+.tab-header{display:flex;gap:12px;margin-bottom:14px}
+.tab-header div{flex:1;text-align:center;padding:8px 0;border-radius:12px;cursor:pointer;background:var(--card)}
+.tab-header .active{background:var(--accent);color:#021021;font-weight:700}
+.field{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+.left{flex:1}
+.label{color:var(--muted);font-size:13px;margin-bottom:8px}
+.valueBox{background:var(--pill);padding:12px;border-radius:12px;min-width:74px;text-align:center;font-weight:600}
+input[type=range]{-webkit-appearance:none;width:100%;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--accent) 0%, rgba(255,255,255,0.14) 0%);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);box-shadow:0 6px 18px rgba(18,176,232,0.18)}
+.preset-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.small{font-size:13px;color:var(--muted)}
+.footer-note{font-size:12px;color:#8ea7b7;margin-top:8px;text-align:center}
+@media(min-width:900px){.wrap{max-width:660px}}
+button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);padding:12px 16px;border-radius:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021021;border:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- کارت عنوان اصلی بالای تب‌ها -->
+  <div class="card" style="text-align:center;margin-bottom:16px">
+    <div style="font-size:22px;font-weight:700">SENSI SNIPER</div>
+    <div style="font-size:14px;color:var(--muted)">سنس ساز اسنایپر</div>
+  </div>
+
+  <!-- سربرگ ها -->
+  <div class="tab-header">
+    <div id="tab-create" class="active" onclick="switchTab('create')">ساخت سنس</div>
+    <div id="tab-profile" onclick="switchTab('profile')">پروفایل</div>
+  </div>
+
+  <!-- تب ساخت سنس -->
+  <div id="tabContent-create">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="small">DPI / حساسیت دستگاه</div>
+        <div class="valueBox" id="dpiVal">800</div>
+      </div>
+
+      <div class="field">
+        <div class="left">
+          <div class="label">General Sensitivity (حساسیت کلی)</div>
+          <input type="range" id="gen" min="5" max="100" value="50">
+          <div class="preset-row"><div class="small">مقدار مجازی</div><div class="valueBox" id="genVal">50</div></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="left">
+          <div class="label">Red Dot / Holo</div>
+          <input type="range" id="red" min="5" max="100" value="45">
+          <div class="preset-row"><div class="small">مقادیر پیشنهادی برای چسبندگی</div><div class="valueBox" id="redVal">45</div></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="left">
+          <div class="label">2x Scope</div>
+          <input type="range" id="s2" min="1" max="100" value="38">
+          <div class="preset-row"><div class="small">مناسب برای تیراندازی متوسط</div><div class="valueBox" id="s2Val">38</div></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="left">
+          <div class="label">4x Scope</div>
+          <input type="range" id="s4" min="1" max="100" value="30">
+          <div class="preset-row"><div class="small">نشان‌گیر برای اسنایپ</div><div class="valueBox" id="s4Val">30</div></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="left">
+          <div class="label">ADS Sensitivity</div>
+          <input type="range" id="ads" min="1" max="100" value="42">
+          <div class="preset-row"><div class="small">Aim Down Sights</div><div class="valueBox" id="adsVal">42</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="btn-primary" onclick="randomize()">دریافت سنس</button>
+        <button class="btn-primary" onclick="saveCurrent()">ذخیره سنس</button>
+      </div>
+
+      <div class="footer-note">روی دکمه تولید سنس کلیک کنید تا سنس را دریافت و تست کنید.</div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-weight:700">نتیجهٔ سنس</div>
+        <div class="small">قابل کپی</div>
+      </div>
+      <pre id="result" style="background:var(--glass);padding:12px;border-radius:12px;white-space:pre-wrap;color:#cfeefc"></pre>
+      <div style="display:flex;gap:10px;margin-top:10px">
+        <button class="btn-primary" onclick="copyResult()">کپی به کلیپ‌بورد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- تب پروفایل -->
+  <div id="tabContent-profile" style="display:none">
+    <div id="profileList"></div>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:6px">به کامیونیتی ما بپیوندید</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn-primary" onclick="window.open('https://t.me/abolsniper','_blank')">در کانال ما عضو شوید</button>
+        <button class="btn-primary" onclick="window.open('https://t.me/irnfunk','_blank')">در کانال ما عضو شوید</button>
+        <button class="btn-primary" onclick="window.open('https://t.me/ffunion','_blank')">در گروه ما عضو شوید</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// مدیریت تب‌ها
+function switchTab(tab){
+  document.getElementById('tabContent-create').style.display = (tab==='create')?'block':'none';
+  document.getElementById('tabContent-profile').style.display = (tab==='profile')?'block':'none';
+  document.getElementById('tab-create').classList.toggle('active', tab==='create');
+  document.getElementById('tab-profile').classList.toggle('active', tab==='profile');
+}
+
+// عناصر سنس
+const els = {
+  gen: document.getElementById('gen'),
+  red: document.getElementById('red'),
+  s2: document.getElementById('s2'),
+  s4: document.getElementById('s4'),
+  ads: document.getElementById('ads'),
+  genVal: document.getElementById('genVal'),
+  redVal: document.getElementById('redVal'),
+  s2Val: document.getElementById('s2Val'),
+  s4Val: document.getElementById('s4Val'),
+  adsVal: document.getElementById('adsVal'),
+  dpiVal: document.getElementById('dpiVal'),
+  result: document.getElementById('result')
+};
+
+// بروزرسانی UI
+function updateUI(){
+  els.genVal.textContent = els.gen.value;
+  els.redVal.textContent = els.red.value;
+  els.s2Val.textContent = els.s2.value;
+  els.s4Val.textContent = els.s4.value;
+  els.adsVal.textContent = els.ads.value;
+  renderResult();
+}
+[els.gen,els.red,els.s2,els.s4,els.ads].forEach(i=>i.addEventListener('input',updateUI));
+function renderResult(){
+  const out = `Gen: ${els.gen.value}\nRed Dot: ${els.red.value}\n2x: ${els.s2.value}\n4x: ${els.s4.value}\nADS: ${els.ads.value}\nDPI: ${els.dpiVal.textContent}`;
+  els.result.textContent = out;
+}
+
+// تولید تصادفی
+function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function randomize(){
+  const dpis = [400,600,720,800,1000,1200,1600];
+  els.dpiVal.textContent = dpis[randInt(0,dpis.length-1)];
+  const gen = randInt(20,70);
+  const ads = Math.max(5, Math.round(gen*(0.75+Math.random()*0.15)));
+  const red = Math.max(5, Math.round(gen*(0.9+(Math.random()-0.5)*0.2)));
+  const s2 = Math.max(1, Math.round(gen*(0.7+Math.random()*0.25)));
+  const s4 = Math.max(1, Math.round(gen*(0.55+Math.random()*0.35)));
+  els.gen.value = gen; els.ads.value=ads; els.red.value=red; els.s2.value=s2; els.s4.value=s4;
+  updateUI();
+}
+
+// کپی
+function copyResult(text){
+  navigator.clipboard.writeText(text || els.result.textContent).then(()=>alert('کپی شد ✅'))
+}
+
+// ذخیره سنس
+function saveCurrent(){
+  const sens = {dpi: els.dpiVal.textContent, gen: els.gen.value, red: els.red.value, s2: els.s2.value, s4: els.s4.value, ads: els.ads.value};
+  let saved = JSON.parse(localStorage.getItem('profileSens')||'[]');
+  saved.push(sens);
+  localStorage.setItem('profileSens', JSON.stringify(saved));
+  alert('ذخیره شد ✅');
+  loadProfile();
+}
+
+// بارگذاری پروفایل
+function loadProfile(){
+  const profileList = document.getElementById('profileList');
+  profileList.innerHTML='';
+  let saved = JSON.parse(localStorage.getItem('profileSens')||'[]');
+  if(saved.length===0){
+    profileList.innerHTML='<div class="card"><div style="text-align:center;color:var(--muted)">هیچ سنسی ذخیره نشده</div></div>'; 
+    return;
+  }
+  saved.forEach((s,i)=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML = `
+      <pre style="background:var(--glass);padding:12px;border-radius:12px;white-space:pre-wrap;color:#cfeefc">
+Gen: ${s.gen}
+Red Dot: ${s.red}
+2x: ${s.s2}
+4x: ${s.s4}
+ADS: ${s.ads}
+DPI: ${s.dpi}</pre>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button onclick="copyResult(\`${sensText(s)}\`)">کپی</button>
+        <button onclick="deleteProfile(${i})">حذف</button>
+      </div>
+    `;
+    profileList.appendChild(card);
+  });
+}
+
+function sensText(s){return `Gen: ${s.gen}\nRed Dot: ${s.red}\n2x: ${s.s2}\n4x: ${s.s4}\nADS: ${s.ads}\nDPI: ${s.dpi}`;}
+function deleteProfile(idx){
+  let saved = JSON.parse(localStorage.getItem('profileSens')||'[]');
+  saved.splice(idx,1);
+  localStorage.setItem('profileSens', JSON.stringify(saved));
+  loadProfile();
+}
+
+// init
+updateUI();
+loadProfile();
+</script>
+</body>
+</html>
